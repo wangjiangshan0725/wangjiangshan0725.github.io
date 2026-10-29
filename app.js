@@ -125,17 +125,6 @@
   const dialog = $('#research-dialog');
   let previousOverflow = '';
   let dialogTrigger = null;
-  const linkLabels = { paper: 'Paper', code: 'Code', project: 'Project', video: 'Video' };
-
-  function appendPaperLinks(container, paper) {
-    Object.entries(paper.links || {}).forEach(([key, url]) => {
-      const link = externalLink(linkLabels[key] || key, url);
-      if (link) {
-        link.append(create('span', 'link-arrow', '↗'));
-        container.append(link);
-      }
-    });
-  }
 
   function openOverview(paper, trigger) {
     dialogTrigger = trigger;
@@ -145,8 +134,6 @@
     richText($('#dialog-authors'), paper.authors);
     $('#dialog-summary').textContent = paper.abstract || paper.summary || '';
     setImage($('#dialog-image'), paper.image, paper.imageAlt, 'assets/flow.svg');
-    $('#dialog-links').replaceChildren();
-    appendPaperLinks($('#dialog-links'), paper);
     $('#dialog-example').hidden = !paper.example;
     previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -179,19 +166,13 @@
       teaser.addEventListener('click', () => openOverview(paper, teaser));
       const details = create('div', 'publication-copy');
       const title = create('h3');
-      const titleButton = create('button', 'title-button', paper.title);
-      titleButton.type = 'button';
-      titleButton.addEventListener('click', () => openOverview(paper, titleButton));
-      title.append(titleButton);
+      title.append(externalLink(paper.title, paper.links?.paper, 'paper-title-link') || document.createTextNode(paper.title));
       details.append(title, richText(create('p', 'authors'), paper.authors));
       const venue = create('p', 'venue');
       if (paper.venue) venue.append(create('em', '', paper.venue));
       if (paper.year) venue.append(`${paper.venue ? ' · ' : ''}${paper.year}`);
       details.append(venue);
       if (paper.summary) details.append(create('p', 'paper-summary', paper.summary));
-      const links = create('div', 'paper-links');
-      appendPaperLinks(links, paper);
-      details.append(links);
       article.append(teaser, details);
       $('#publications').append(article);
     });
