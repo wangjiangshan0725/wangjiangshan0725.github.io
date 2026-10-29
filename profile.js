@@ -110,7 +110,7 @@ window.PROFILE = {
       "links": {
         "paper": "https://arxiv.org/abs/2406.08850",
         "code": "https://github.com/wangjiangshan0725/COVE",
-        "project": "https://cove-video.github.io/"
+        "project": ""
       },
       "bibtex": "@misc{wang2024cove,\n  title={COVE: Unleashing the Diffusion Feature Correspondence for Consistent Video Editing},\n  author={Jiangshan Wang and Yue Ma and Jiayi Guo and Yicheng Xiao and Gao Huang and Xiu Li},\n  year={2024},\n  eprint={2406.08850},\n  archivePrefix={arXiv},\n  primaryClass={cs.CV}\n}",
       "bibtexFile": "citations/cove.bib"
